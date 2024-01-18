@@ -1,0 +1,39 @@
+from model_processing_adt import ModelADT
+
+
+class DogModel(ModelADT):
+    def __init__(self, model_path):
+        # Call the constructor of the parent class (ModelADT)
+        super().__init__(model_path)
+
+    def load_model(self):
+        # Specific implementation for loading a dog-related model
+        print(f"Loading dog model from: {self.model_path}")
+        # Replace the following line with the actual code to load your dog model
+        # For example, if using TensorFlow, you might use: 
+        # self.loaded_model = tf.keras.models.load_model(self.model_path)
+        self.loaded_model = "Your actual dog model loading logic here"
+
+    def preprocess_input(self, input_data):
+        # Specific implementation for preprocessing input data for a dog model
+        print("Preprocessing dog input data")
+        # Replace the following line with the actual preprocessing logic for a dog model
+        # For example, if using a specific dog model's preprocessing method:
+        # preprocessed_data = dog_model_specific_preprocess(input_data)
+        preprocessed_data = "Your actual dog preprocessing logic here"
+        return preprocessed_data
+
+    def predict_dog_breed(self, input_data):
+        # Specific implementation for predicting dog breed
+        if self.loaded_model is None:
+            raise ValueError("Dog model not loaded. Call load_model first.")
+
+        preprocessed_data = self.preprocess_input(input_data)
+        
+        # Specific implementation for predicting dog breed
+        print("Predicting dog breed")
+        # Replace the following line with the actual prediction logic for a dog model
+        # For example, if using a specific dog model's predict method:
+        # dog_breed_predictions = self.loaded_model.predict_dog_breed(preprocessed_data)
+        dog_breed_predictions = "Your actual dog breed prediction logic here"
+        return dog_breed_predictions

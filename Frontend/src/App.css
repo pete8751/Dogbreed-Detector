@@ -2,6 +2,172 @@
   text-align: center;
 }
 
+.card {
+  padding: 10px;
+  /* box-shadow: 0 0 5px; */
+  border-radius: 5px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card .top {
+  text-align: center;
+}
+
+.card button {
+  outline: 0;
+  border: 0;
+  font-weight: 400;
+  cursor: pointer;
+  padding: 8px 14px;
+  margin: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 200px;
+  min-width: 150px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #282c34;
+  color: white;
+  cursor: pointer;
+}
+
+.card button:hover {
+  opacity: 0.7;
+}
+
+.card .drag-area {
+  height: 300px;
+  width: 70%; /* Responsive width */
+  max-width: 1000px;
+  border-radius: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 2px dashed #ccc;
+  color: #ccc;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  -webkit-user-select: none;
+  /* Remove margin-top */
+}
+
+.drag-area:hover {
+  border: 2px dashed #61dafb;
+  /* color: #61dafb; */
+}
+
+.card .drag-area .display-image {
+  max-width: 100%; /* Ensure the container does not exceed the drag area width */
+  max-height: 100%; /* Limit the height of the container */
+  display: flex;
+  justify-content: center;
+}
+
+.card .drag-area .display-image img{
+  max-width: 50%; /* Ensure the image does not exceed the drag area width */
+  /* max-height: 50%;  */
+  object-fit: contain; /* Maintain aspect ratio and fit within the container */
+}
+
+.active {
+  border: 2px solid #61dafb !important;
+  color: #61dafb !important;
+  background-color: #282c34 !important;
+}
+
+.used {
+  border: 2px dashed #61dafb !important;
+  color: #61dafb !important;
+  /* background-color: #282c34 !important; */
+}
+
+.card .drag-area .visible{
+  font-size: 18px;
+}
+
+.card .select{
+  color: #ccc;
+  margin-left: 5px;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.card .select:hover{
+  color: #61dafb;
+  opacity: 0.7;
+}
+
+.card .select_drop{
+  color: #61dafb;
+  margin-left: 5px;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+/* .card .select_drop:hover{
+  color: #61dafb;
+  opacity: 0.7;
+} */
+
+.card .container{
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  max-height: 200px;
+  overflow-y: auto;
+  margin-top: 10px;
+}
+
+.card .container .image{
+  width: 100px;
+  height: 100px;
+  margin: 5px;
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.card .container .image img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.card .container .image .span{
+  position: absolute;
+  top: -2px;
+  right: 9px;
+  background-color: #282c34;
+  font-size: 20px;
+  color: white;
+  padding: 2px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.card input, .card .drag-area .on-drag, .card .drag-area.dragover .visible {
+  display: none;
+}
+
+.delete{
+  z-index: 999;
+  color: black;
+}
+
+.delete:hover{
+  color: red;
+  cursor: pointer;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
