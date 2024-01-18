@@ -1,6 +1,6 @@
 # Dog Breed Classification with Transfer Learning
 
-![Dog Image](Frontend/imgs/dog_classify.png)
+<img src="Frontend/imgs/dog_classify.png" alt="Dog Image" width="300" height="300">
 
 ## Overview
 
