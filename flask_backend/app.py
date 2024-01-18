@@ -6,9 +6,16 @@ from dog_model import DogModel
 from models_util import model_strategy, process_img_data
 
 app = Flask(__name__)
-
+loaded = False
 model = model_strategy(DogModel("path/to/model"))
-model.load()
+
+def load():
+    global loaded  # Declare 'loaded' as a global variable
+    model.load_model()
+    loaded = True
+    print("Model loaded")
+
+load()
 
 @app.route('/')
 
