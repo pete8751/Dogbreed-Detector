@@ -6,6 +6,8 @@
 
 This project focuses on dog breed classification using TensorFlow, employing Convolutional Neural Networks (CNNs) and transfer learning. Despite a challenging dataset comprising only around 400 images per breed, I managed to get the model to a remarkable 88% accuracy on 120 breeds. I learnt a lot through this challenging task of creating an accurate model with very little data. The Stanford Dogs dataset served as the primary data source.
 
+Please note that most of my work was done on google colabs, and then later coded on an IDE. Please see the python notebook for implementation, and data pipelining for my final model.  
+
 ## Approach
 
 ### 1. Custom Model Attempt
