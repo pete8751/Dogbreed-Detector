@@ -71,7 +71,7 @@ function DragDropImageUploader() {
     }
 
     function uploadImage() {
-        const imageUrl = image?.url; // Assuming `image` is the variable holding your image object
+        const imageUrl = image?.url; 
     
         if (!imageUrl) {
             console.error('Image URL is missing.');
@@ -81,10 +81,9 @@ function DragDropImageUploader() {
         // Example server endpoint, replace with your actual server endpoint
         const serverEndpoint = 'http://127.0.0.1:5000/analyze_image';
     
-        // Prepare the data to be sent in the request body
+        // data to be sent in the request body
         const data = {
             imageUrl: imageUrl,
-            // Add any additional data you want to send
         };
     
         // Make the POST request using fetch

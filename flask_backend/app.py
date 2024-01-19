@@ -1,11 +1,12 @@
 from flask import Flask, request, jsonify
+import pdb
 from flask_cors import CORS
 import requests
 from dog_model import DogModel
 from models_util import model_strategy, process_img_data
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/analyze_image": {"origins": "http://localhost:3000"}})
 loaded = False
 model = model_strategy(DogModel("flask_backend\dog_model.py"))
 
@@ -14,43 +15,43 @@ def load():
     model.load()
     loaded = True
     print("Model loaded")
-
 load()
 
 @app.route('/')
-
 # #handle preflight request
-# @app.route('/analyze_image', methods=['OPTIONS'])
-# def handle_options():
-#     return '', 200, {
-#         'Access-Control-Allow-Origin': 'http://localhost:3000',
-#         'Access-Control-Allow-Methods': 'POST',
-#         'Access-Control-Allow-Headers': 'Content-Type',
-#     }
+@app.route('/analyze_image/', methods=['OPTIONS'])
+def handle_options():
+    return '', 200, {
+        'Access-Control-Allow-Origin': 'http://localhost:3000',
+        'Access-Control-Allow-Methods': 'POST',
+        'Access-Control-Allow-Headers': 'Content-Type',
+    }
 
 @app.route('/analyze_image', methods=['POST'])
+
 def analyze_image():
     print("recieved")
     try:
         data = request.get_json()
         image_url = data.get('imageUrl')
-
+        print(image_url)
         if not image_url:
             return jsonify({'error': 'Image URL is missing'}), 400
-
+        
         # Download the image from the URL
         response = requests.get(image_url)
+        print("5")
         if response.status_code != 200:
             return jsonify({'error': 'Failed to download image'}), 500
-
+        print("6")
         # Process the image in-memory
         image, form, width, height = process_img_data(response.content);
-
+        print("7")
         # Check image format
         allowed_formats = {'JPEG', 'PNG'}
         if form not in allowed_formats:
             return jsonify({'error': f'Unsupported image format: {form}'}), 400
-
+        print("8")
         # Check image dimensions
         max_width = 1920  # Adjust the maximum width as needed
         max_height = 1080  # Adjust the maximum height as needed
@@ -58,20 +59,13 @@ def analyze_image():
             return jsonify({'error': f'Image dimensions exceed the allowed limits ({max_width}x{max_height})'}), 400
         
         pre_processed_image = model.preprocess_input(image)
+        print("9")
         prediction = model.predict(pre_processed_image)
+        print("10")
         return jsonify({'success': 'Image analyzed successfully', 'Prediction': prediction}), 200
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-
-app = Flask(__name__)
-
-
-
-
-
-
-
 
 
 if __name__ == '__main__':
