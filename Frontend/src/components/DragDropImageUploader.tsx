@@ -79,7 +79,7 @@ function DragDropImageUploader() {
         }
     
         // Example server endpoint, replace with your actual server endpoint
-        const serverEndpoint = 'https://your-server-endpoint.com/upload';
+        const serverEndpoint = 'http://127.0.0.1:5000/analyze_image';
     
         // Prepare the data to be sent in the request body
         const data = {

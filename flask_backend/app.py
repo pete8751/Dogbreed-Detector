@@ -1,17 +1,17 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import requests
-from io import BytesIO
-from PIL import Image
 from dog_model import DogModel
 from models_util import model_strategy, process_img_data
 
 app = Flask(__name__)
+CORS(app)
 loaded = False
-model = model_strategy(DogModel("path/to/model"))
+model = model_strategy(DogModel("flask_backend\dog_model.py"))
 
 def load():
     global loaded  # Declare 'loaded' as a global variable
-    model.load_model()
+    model.load()
     loaded = True
     print("Model loaded")
 
@@ -19,8 +19,18 @@ load()
 
 @app.route('/')
 
+# #handle preflight request
+# @app.route('/analyze_image', methods=['OPTIONS'])
+# def handle_options():
+#     return '', 200, {
+#         'Access-Control-Allow-Origin': 'http://localhost:3000',
+#         'Access-Control-Allow-Methods': 'POST',
+#         'Access-Control-Allow-Headers': 'Content-Type',
+#     }
+
 @app.route('/analyze_image', methods=['POST'])
 def analyze_image():
+    print("recieved")
     try:
         data = request.get_json()
         image_url = data.get('imageUrl')
