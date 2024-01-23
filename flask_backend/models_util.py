@@ -20,7 +20,7 @@ class model_strategy:
         return evaluation;
         
 def process_img_data(response):
-    contentAny = Image.open(BytesIO(response));
+    content = Image.open(BytesIO(response));
     content = content.convert('RGB');
     return {content, content.format, content.width, content.height}
 
