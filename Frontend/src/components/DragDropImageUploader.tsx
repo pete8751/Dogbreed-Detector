@@ -1,6 +1,7 @@
 import React, {useState, useRef} from 'react';
 
 interface Image {
+    file: File;
     name: string;
     url: string;
 }
@@ -28,6 +29,7 @@ function DragDropImageUploader() {
         if (file.type.split('/')[0] !== 'image') return alert("Don't support this file type.");
         if (!image || !(image.name === file.name)) {
             setImage({
+                file: file,
                 name: file.name,
                 url: URL.createObjectURL(file),
             });
@@ -61,9 +63,12 @@ function DragDropImageUploader() {
         if (files.length > 1) return alert("Please select only one image.");
         const file = files[0];
         if (file.type.split('/')[0] !== 'image') return alert("Don't support this file type.");
+        // console.log(image?.name)
+        // console.log(file)
 
         if (!image || !(image.name === file.name)) {
             setImage({
+                file: file,
                 name: file.name,
                 url: URL.createObjectURL(file),
             });
@@ -72,28 +77,30 @@ function DragDropImageUploader() {
 
     function uploadImage() {
         const imageUrl = image?.url; 
+        const file = image?.file;
+        console.log(file)
     
         if (!imageUrl) {
             console.error('Image URL is missing.');
+            return;
+        }
+        if (!file) {
+            console.error('File is missing.');
             return;
         }
     
         // Example server endpoint, replace with your actual server endpoint
         const serverEndpoint = 'http://127.0.0.1:5000/analyze_image';
     
-        // data to be sent in the request body
-        const data = {
-            imageUrl: imageUrl,
-        };
-    
+        // Create a FormData object
+        const formData = new FormData();
+        formData.append('imageUrl', imageUrl);
+        formData.append('file', file);
+
         // Make the POST request using fetch
         fetch(serverEndpoint, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                // Add any additional headers if needed
-            },
-            body: JSON.stringify(data),
+            body: formData,  // Use FormData instead of JSON.stringify
         })
         .then(response => {
             if (!response.ok) {
