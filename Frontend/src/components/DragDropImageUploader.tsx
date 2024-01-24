@@ -97,6 +97,8 @@ function DragDropImageUploader() {
         formData.append('imageUrl', imageUrl);
         formData.append('file', file);
 
+        const reader = new FileReader();
+
         // Make the POST request using fetch
         fetch(serverEndpoint, {
             method: 'POST',
@@ -115,6 +117,7 @@ function DragDropImageUploader() {
         .catch(error => {
             console.error('Error during fetch operation:', error);
         });
+        console.log(reader.readAsArrayBuffer(file))
     }
 
     return (

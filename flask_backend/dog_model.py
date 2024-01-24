@@ -1,6 +1,6 @@
 from model_processing_adt import ModelADT
 from keras import layers, models, applications
-from keras.applications.xception import preprocess_input
+from keras.applications.xception import preprocess_input as xception_preprocess_input
 import numpy as np
 import cv2
 
@@ -51,7 +51,7 @@ class DogModel(ModelADT):
         # Specific implementation for loading a dog-related model
         print(f"Loading dog model from: {self.model_path}")
         base_model = applications.Xception(
-        input_shape=(299, 299, 3),
+        input_shape=(300, 300, 3),
         include_top=False,
         weights="imagenet",
         pooling=None,  # Global average pooling for flattening
@@ -73,31 +73,36 @@ class DogModel(ModelADT):
     def preprocess_input(self, input_data):
         # input_data will be image object obtained from PIL.Image.open().
         image_array = np.array(input_data)
+
         target_size = (300, 300);  
         resized_image_array = cv2.resize(image_array, target_size)
-        preprocessed_data = preprocess_input(resized_image_array)
 
+        preprocessed_data = xception_preprocess_input(resized_image_array)
+        batch_output = np.expand_dims(preprocessed_data, axis=0)
+        print(batch_output.shape)
         # I might need to add a dimension to the image array to make it compatible with the model.
-        return preprocessed_data
+        return batch_output
 
-    def predict_dog_breed(self, input_data):
+    def predict(self, input_data):
         # Specific implementation for predicting dog breed (input_data should be preprocessed first)
         if self.loaded_model is None:
             raise ValueError("Dog model not loaded. Call load_model first.")
+        print("input shape")
+        print(input_data.shape)
         
         # Specific implementation for predicting dog breed
         print("Predicting dog breed")
         # Replace the following line with the actual prediction logic for a dog model
         # For example, if using a specific dog model's predict method:
         dog_breed_predictions = self.loaded_model.predict(input_data)
-
+        print(dog_breed_predictions)
         # Get the top 5 predicted classes and their probabilities
-        top5_classes = np.argsort(dog_breed_predictions)[-5:][::-1]
-        top5_probabilities = dog_breed_predictions[top5_classes]
+        top5_classes = np.argsort(dog_breed_predictions[0])[-5:][::-1]
+        top5_probabilities = dog_breed_predictions[0][top5_classes]
 
         # Extract the breed names for the top 5 classes
         top5_breeds = [dog_breeds[i] for i in top5_classes]
         #zip into tuples.
-        predictions = zip(top5_breeds, top5_probabilities)
-
+        prediction_pairs = zip(top5_breeds, top5_probabilities)
+        predictions = [{"breed": breed, "probability": float(prob)} for breed, prob in prediction_pairs]
         return predictions

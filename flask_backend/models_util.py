@@ -19,8 +19,9 @@ class model_strategy:
         evaluation = self.predict(processed_data);
         return evaluation;
         
-def process_img_data(response):
-    content = Image.open(BytesIO(response));
-    content = content.convert('RGB');
-    return {content, content.format, content.width, content.height}
+def process_img_data(file):
+    content = Image.open(file);
+    if content.mode != 'RGB':
+        content = content.convert('RGB');
+    return content, content.format, content.size[0], content.size[1]
 
