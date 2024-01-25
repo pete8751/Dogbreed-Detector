@@ -90,7 +90,7 @@ function DragDropImageUploader() {
         }
     
         // Example server endpoint, replace with your actual server endpoint
-        const serverEndpoint = 'http://127.0.0.1:5000/analyze_image';
+        const serverEndpoint = 'https://dogbreed-ml-model-dock-fa3461448856.herokuapp.com/analyze_image';
     
         // Create a FormData object
         const formData = new FormData();
