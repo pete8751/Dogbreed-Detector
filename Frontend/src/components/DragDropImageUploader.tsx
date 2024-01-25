@@ -63,6 +63,16 @@ function DragDropImageUploader() {
         if (files.length > 1) return alert("Please select only one image.");
         const file = files[0];
         if (file.type.split('/')[0] !== 'image') return alert("Don't support this file type.");
+        // I want to check if the file is a JPEG or PNG file
+        if (file.type !== 'image/jpeg' && file.type !== 'image/png') {
+            alert("Only JPEG and PNG files are supported.");
+            return;
+        }
+        //I want to check if file width is less than 1920p, and height is less than 1080p
+        if (file.width > 1920 || file.height > 1080) {
+            alert("Image size must be less than 5MB.");
+            return;
+        }
         // console.log(image?.name)
         // console.log(file)
 
