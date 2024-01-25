@@ -64,8 +64,6 @@ class_names = np.load('/content/class_names.npy')
 
 training_labels_array, testing_labels_array = np.array(training_labels_array), np.array(testing_labels_array)
 
-# I wanted to add an extra 3000 images for training, so I removed these from validation, and added them to training.
-# I give 3000 images for validation, and around 1500 images for testing.
 
 extra_training, extra_training_labels = testing_norm_data[:3000], testing_labels_array[:3000]
 training_norm_data = np.concatenate((training_norm_data, extra_training), axis=0)
@@ -75,14 +73,6 @@ print(training_norm_data.shape)
 validation_images_array, validation_labels_array = testing_norm_data[3000:7000], testing_labels_array[3000:7000]
 testing_norm_data, testing_labels_array = testing_norm_data[7000:], testing_labels_array[7000:]
 
-# Converting Labels to one-hot:
-# training_categorical = to_categorical(training_labels_array)
-# # print(type(training_categorical.shape))
-# print(training_labels_array[0])
-# validation_categorical = to_categorical(validation_labels_array)
-# print(validation_categorical.shape)
-
-# Creating the train_generator
 train_datagen = preprocessing.image.ImageDataGenerator(
         rotation_range=20,
         shear_range=0.2,
@@ -129,25 +119,8 @@ model.add(layers.Dense(512, activation='relu'))
 model.add(layers.Dropout(0.5))
 model.add(layers.Dense(120, activation='softmax'))
 
-# model.add(layers.Flatten(input_shape=train_data.shape[1:]))
-# model.add(layers.Dense(512, activation='relu'))
-# model.add(layers.Dropout(0.5))
-# model.add(layers.Dense(120, activation='softmax'))
-
 model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 model.fit(train_data, training_labels_array, epochs=10, validation_data=validation_generator)
 
-# I keep getting the following error: Matrix size-incompatible: In[0]: [32,30000], In[1]: [18432,512]
-# The labels are not the issue, because I set the loss to sparse_categorical_crossentropy.
-# The issue is that the logits have shape [32,120], but the labels have shape [3840].
-# The labels should have shape [32,120] as well.
-# The model works completely fine when I don't use the bottleneck features, but instead incorportate the base model into the model.
-# The error likely arises from a mismatch in the first dense layer.
-# To fix this, I can use the following:
-# model.add(layers.Flatten(input_shape=train_data.shape[1:]))
-
-
-# model.fit(train_data, training_labels_array, epochs=10, validation_data=(validation_images_array, validation_labels_array))
-# model.save('/content/DogBreed Models')
 
 model.summary()
