@@ -1,0 +1,13 @@
+model_files/saved_model.pb
+model_files/keras_metadata.pb
+model_files/variables/variables.index
+model_files/variables/variables.data-00000-of-00001
+model_files/fingerprint.pb
+model_files/model1.tflite
+dogbreed-ml-model/*
+Python-3.9.18.tgz
+Python-3.9.18/*
+__pycache__/dog_model.cpython-39.pyc
+__pycache__/model_processing_adt.cpython-39.pyc
+__pycache__/models_util.cpython-39.pyc
+model_files/loaded_model.tflite

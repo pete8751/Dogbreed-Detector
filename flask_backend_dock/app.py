@@ -1,20 +1,22 @@
+import os
 from flask import Flask, request, jsonify
+import logging
 from flask_cors import CORS
 from dog_model import DogModel
 from models_util import model_strategy, process_img_data
 
 
 app = Flask(__name__)
-CORS(app, resources={r"/analyze_image": {"origins": "http://localhost:3000"}})
-loaded = False
+CORS(app)
 model = model_strategy(DogModel("flask_backend\dog_model.py"))
 
-def load():
-    global loaded  # Declare 'loaded' as a global variable
-    model.load()
-    loaded = True
-    print("Model loaded")
-load()
+# try:
+#     model.load()
+#     print("Model loaded")
+# except Exception as e:
+#     print(e)
+#     logging.info(e)
+
 
 @app.route('/')
 # #handle preflight request
@@ -38,14 +40,8 @@ def analyze_image():
         # image_url = request.form.get('imageUrl')
     
         # Process the image in-memory
-        print("1")
-        print(file)
 
         image, form, width, height = process_img_data(file)
-        print(image)
-        print(form)
-        print(width)
-        print(height)
 
         # Check image format
         allowed_formats = {'JPEG', 'PNG'}
@@ -58,15 +54,17 @@ def analyze_image():
         if width > max_width or height > max_height:
             return jsonify({'error': f'Image dimensions exceed the allowed limits ({max_width}x{max_height})'}), 400
         
-        pre_processed_image = model.preprocess_input(image)
-        prediction = model.predict(pre_processed_image)
+        prediction = model.execute(image)
+        # pre_processed_image = model.preprocess_input(image)
+        # prediction = model.predict(pre_processed_image)
 
         return jsonify({'success': 'Image analyzed successfully', 'Prediction': prediction}), 200
 
     except Exception as e:
         print(e);
+        logging.info(e)
         return jsonify({'error': str(e)}), 500
 
-
+port = int(os.environ.get("PORT", 5000))
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=port)
