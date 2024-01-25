@@ -3,3 +3,32 @@ flask_backend/model_files/variables/variables.index
 flask_backend/model_files/fingerprint.pb
 flask_backend/model_files/keras_metadata.pb
 flask_backend/model_files/saved_model.pb
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
+
+# model files
+flask_backend\model_files\variables
+flask_backend\model_files\assets
+flask_backend\model_files\fingerprint.pb
+flask_backend\model_files\keras_metadata.pb
+flask_backend\model_files\saved_model.pb
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
