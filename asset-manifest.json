@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Dogbreed-Detector/static/css/main.bb9034aa.css",
+    "main.js": "/Dogbreed-Detector/static/js/main.33184624.js",
+    "static/js/787.d4aba7ab.chunk.js": "/Dogbreed-Detector/static/js/787.d4aba7ab.chunk.js",
+    "index.html": "/Dogbreed-Detector/index.html",
+    "main.bb9034aa.css.map": "/Dogbreed-Detector/static/css/main.bb9034aa.css.map",
+    "main.33184624.js.map": "/Dogbreed-Detector/static/js/main.33184624.js.map",
+    "787.d4aba7ab.chunk.js.map": "/Dogbreed-Detector/static/js/787.d4aba7ab.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.bb9034aa.css",
+    "static/js/main.33184624.js"
+  ]
+}
