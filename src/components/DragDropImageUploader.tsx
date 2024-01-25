@@ -143,9 +143,6 @@ function DragDropImageUploader() {
     useEffect(() => {
     // This function will be called whenever predictState changes
 
-    // You can perform additional actions based on the changes
-
-    // For example, you might want to update some other state or trigger an API call
     }, [prediction]);
 
     return (
