@@ -181,13 +181,13 @@ function DragDropImageUploader() {
             </button>
             <div className="predict-container">
                 <div className="prediction">
-                    {prediction &&
+                    {prediction.length > 0 &&
                     (<p>
                         This is a {prediction[0].breed}
                     </p>)}
                 </div>
                 <div className="breakdown">
-                {prediction &&
+                {prediction.length > 0 &&
                     prediction.map((item) => (
                     <p key={item.breed}>
                         This is {Math.round(item.probability * 100)}% a {item.breed}
