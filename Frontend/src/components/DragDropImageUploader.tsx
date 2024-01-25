@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 
 interface Image {
     file: File;
@@ -6,10 +6,17 @@ interface Image {
     url: string;
 }
 
+interface predictObject {
+    breed: string;
+    probability: number; // Assuming the percentage is represented as a number (0 to 100)
+  };
+
 function DragDropImageUploader() {
     const dragArea = document.querySelector(".drag-area");
 
     const [image, setImage] = useState<Image | null>(null);
+    //Prediction is an array of objects, each object has a key and value, where key is the breed name and value is the probability there are 5 objects in the array
+    const [prediction, setPrediction] = useState<predictObject[]>([]);
     const [isDragging, setIsDragging] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -68,11 +75,12 @@ function DragDropImageUploader() {
             alert("Only JPEG and PNG files are supported.");
             return;
         }
+  
         //I want to check if file width is less than 1920p, and height is less than 1080p
-        if (file.width > 1920 || file.height > 1080) {
-            alert("Image size must be less than 5MB.");
-            return;
-        }
+        // if (file.width > 1920 || file.height > 1080) {
+        //     alert("Image size must be less than 5MB.");
+        //     return;
+        // }
         // console.log(image?.name)
         // console.log(file)
 
@@ -123,12 +131,22 @@ function DragDropImageUploader() {
         .then(responseData => {
             // Handle the response from the server
             console.log('Server response:', responseData);
+            setPrediction(responseData.Prediction);
         })
         .catch(error => {
             console.error('Error during fetch operation:', error);
         });
         console.log(reader.readAsArrayBuffer(file))
     }
+
+  // useEffect to listen for changes in predictState
+    useEffect(() => {
+    // This function will be called whenever predictState changes
+
+    // You can perform additional actions based on the changes
+
+    // For example, you might want to update some other state or trigger an API call
+    }, [prediction]);
 
     return (
         <div className = "card">
@@ -164,6 +182,22 @@ function DragDropImageUploader() {
             <button type="button" onClick={uploadImage}>
                 Analyze
             </button>
+            <div className="predict-container">
+                <div className="prediction">
+                    {prediction &&
+                    (<p>
+                        This is a {prediction[0].breed}
+                    </p>)}
+                </div>
+                <div className="breakdown">
+                {prediction &&
+                    prediction.map((item) => (
+                    <p key={item.breed}>
+                        This is {Math.round(item.probability * 100)}% a {item.breed}
+                    </p>
+                    ))}
+                </div>
+            </div>
         </div>
     )
 }
