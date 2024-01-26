@@ -10,6 +10,7 @@ This project focuses on dog breed classification using TensorFlow, employing Con
 
 Please note that most of my work was done on google colabs, and then later coded on an IDE. Please see the python notebook for implementation, and data pipelining for my final model.
 
+The website is deployed at this URL, go check out my model! https://pete8751.github.io/Dogbreed-Detector/
 ## Approach
 
 ### 1. Custom Model Attempt
