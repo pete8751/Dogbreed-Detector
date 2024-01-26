@@ -2,9 +2,89 @@
   text-align: center;
 }
 
-.card {
+@import url('https://fonts.googleapis.com/css2?family=Anek+Malayalam:wght@100;200;300;400;500;600;700;800&display=swap');
+
+#root{
+  background-color: rgb(60, 60, 60);
+}
+body {
+  background-color: rgb(60, 60, 60);
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  /* margin-top: 150px; */
+  font-size: 17px;
+  color: white;
+  overflow-x: hidden;
+  /* overflow-y: scroll; */
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.dropdown {
+  width: 300px;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0,0,0,.1);
+  background-color: white;
+  color: black;
+}
+
+.dropdown-header {
+  padding: 15px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: black;
+}
+fa-chevron-right{
+  background: red;
+}
+
+.dropdown-body {
+  padding: 5px;
+  border-top: 1px solid #E5E8EC;
+  display: none;
+  color: black;
+}
+
+.dropdown-body.open {
+  display: block;
+}
+
+.dropdown-item {
   padding: 10px;
+}
+
+.dropdown-item:hover {
+  cursor: pointer;
+}
+
+.dropdown-item-dot {
+  opacity: 0;
+  color: #91A5BE;
+  transition: all .2s ease-in-out;
+}
+
+.dropdown-item-dot.selected {
+  opacity: 1;
+}
+
+.icon {
+  font-size: 13px;
+  color: black;
+  transform: rotate(0deg);
+  transition: all .2s ease-in-out;
+}
+
+.icon.open {
+  transform: rotate(90deg);
+}
+
+.card {
+  /* padding: 10px; */
   /* box-shadow: 0 0 5px; */
+  margin-top: 100px;
   border-radius: 5px;
   overflow: hidden;
   display: flex;
@@ -18,7 +98,7 @@
 
 .card button {
   outline: 0;
-  border: 0;
+  border: 2px solid #282c34;
   font-weight: 400;
   cursor: pointer;
   padding: 8px 14px;
@@ -28,7 +108,7 @@
   max-width: 200px;
   min-width: 150px;
   padding: 10px;
-  border: none;
+  /* border: none; */
   border-radius: 5px;
   background-color: #282c34;
   color: white;
@@ -37,6 +117,57 @@
 
 .card button:hover {
   opacity: 0.7;
+  border: 2px solid orange;
+}
+
+.submit-btn {
+  font-family: 'Anek Malayalam', sans-serif;
+  background: #f5b40d;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 14px;
+  color: #ffffff;
+  min-width: 200px;
+  min-height: 36px;
+  cursor: pointer;
+  outline: none;
+}
+
+.submit-btn:disabled {
+  opacity: 0.5;
+  background: orange;
+  color: #9fa3a9;
+  cursor: not-allowed;
+}
+
+.footer {
+  min-height: 150px;
+  height: 100%;
+  /* width: 100vw; */
+  /* height: 100%; */
+  margin-top: 100px;
+  background-color: black;
+}
+
+.spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation-name: spin;
+  animation-duration: 500ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .card .drag-area {
@@ -48,41 +179,43 @@
   margin-right: auto;
   border: 2px dashed #ccc;
   color: #ccc;
-  background-color: white;
+  background-color: rgb(60, 60, 60);
   display: flex;
   justify-content: center;
   align-items: center;
   user-select: none;
   -webkit-user-select: none;
+  margin-top: 5%;
+  margin-bottom: 5%;
   /* Remove margin-top */
 }
 
 .drag-area:hover {
-  border: 2px dashed #61dafb;
+  border: 2px dashed orange;
   /* color: #61dafb; */
 }
 
 .card .drag-area .display-image {
-  max-width: 100%; /* Ensure the container does not exceed the drag area width */
-  max-height: 100%; /* Limit the height of the container */
+  width: 100%; /* Ensure the container does not exceed the drag area width */
+  height: 100%; /* Limit the height of the container */
   display: flex;
   justify-content: center;
 }
 
 .card .drag-area .display-image img{
-  max-width: 50%; /* Ensure the image does not exceed the drag area width */
+  max-width: 60%; /* Ensure the image does not exceed the drag area width */
   /* max-height: 50%;  */
   object-fit: contain; /* Maintain aspect ratio and fit within the container */
 }
 
 .active {
-  border: 2px solid #61dafb !important;
+  border: 2px solid orange !important;
   color: #61dafb !important;
   background-color: #282c34 !important;
 }
 
 .used {
-  border: 2px dashed #61dafb !important;
+  border: 2px dashed orange !important;
   color: #61dafb !important;
   /* background-color: #282c34 !important; */
 }
@@ -160,11 +293,13 @@
 
 .delete{
   z-index: 999;
-  color: black;
+  color: red;
+  height: fit-content;
+  font-size: 2em;
 }
 
 .delete:hover{
-  color: red;
+  color: orange;
   cursor: pointer;
 }
 

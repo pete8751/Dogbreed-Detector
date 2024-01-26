@@ -1,4 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react';
+import Dropdown from './Dropdown';
+import Analyze from './Analyze';
 
 interface Image {
     file: File;
@@ -15,6 +17,7 @@ function DragDropImageUploader() {
     const dragArea = document.querySelector(".drag-area");
 
     const [image, setImage] = useState<Image | null>(null);
+    const [showLoader, setShowLoader] = React.useState(false)
     //Prediction is an array of objects, each object has a key and value, where key is the breed name and value is the probability there are 5 objects in the array
     const [prediction, setPrediction] = useState<predictObject[]>([]);
     const [isDragging, setIsDragging] = useState(false);
@@ -75,14 +78,6 @@ function DragDropImageUploader() {
             alert("Only JPEG and PNG files are supported.");
             return;
         }
-  
-        //I want to check if file width is less than 1920p, and height is less than 1080p
-        // if (file.width > 1920 || file.height > 1080) {
-        //     alert("Image size must be less than 5MB.");
-        //     return;
-        // }
-        // console.log(image?.name)
-        // console.log(file)
 
         if (!image || !(image.name === file.name)) {
             setImage({
@@ -94,16 +89,19 @@ function DragDropImageUploader() {
     }
 
     function uploadImage() {
+        setShowLoader(true)
         const imageUrl = image?.url; 
         const file = image?.file;
         console.log(file)
     
         if (!imageUrl) {
             console.error('Image URL is missing.');
+            setShowLoader(false)
             return;
         }
         if (!file) {
             console.error('File is missing.');
+            setShowLoader(false)
             return;
         }
     
@@ -115,8 +113,6 @@ function DragDropImageUploader() {
         formData.append('imageUrl', imageUrl);
         formData.append('file', file);
 
-        const reader = new FileReader();
-
         // Make the POST request using fetch
         fetch(serverEndpoint, {
             method: 'POST',
@@ -126,17 +122,19 @@ function DragDropImageUploader() {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
+            setShowLoader(false)
             return response.json();
         })
         .then(responseData => {
             // Handle the response from the server
             console.log('Server response:', responseData);
             setPrediction(responseData.Prediction);
+            setShowLoader(false)
         })
         .catch(error => {
             console.error('Error during fetch operation:', error);
+            setShowLoader(false)
         });
-        console.log(reader.readAsArrayBuffer(file))
     }
 
   // useEffect to listen for changes in predictState
@@ -147,8 +145,9 @@ function DragDropImageUploader() {
 
     return (
         <div className = "card">
+            <div className="nav"></div>
             <div className="top">
-                <p>Drag & Drop your Image</p>
+                <p>Dog Breed Detector</p>
             </div>
             <div className="drag-area" onDragOver={onDragOver} onDragLeave={onDragLeave} onDrop={onDrop}>
                 {image && ( 
@@ -176,9 +175,12 @@ function DragDropImageUploader() {
                     </div>
                 )}
             </div> */}
-            <button type="button" onClick={uploadImage}>
-                Analyze
-            </button>
+            <Analyze
+                text="Analyze"
+                onSubmit={uploadImage}
+                loading={showLoader}
+                disabled={showLoader}
+            />
             <div className="predict-container">
                 <div className="prediction">
                     {prediction.length > 0 &&
@@ -186,15 +188,18 @@ function DragDropImageUploader() {
                         This is a {prediction[0].breed}
                     </p>)}
                 </div>
-                <div className="breakdown">
+                {prediction.length > 0 &&
+                (<Dropdown items={prediction}></Dropdown>)}
+                {/* <div className="breakdown">
                 {prediction.length > 0 &&
                     prediction.map((item) => (
                     <p key={item.breed}>
                         This is {Math.round(item.probability * 100)}% a {item.breed}
                     </p>
                     ))}
-                </div>
+                </div> */}
             </div>
+            <div className="footer"></div>
         </div>
     )
 }
