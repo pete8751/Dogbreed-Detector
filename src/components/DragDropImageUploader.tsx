@@ -118,23 +118,31 @@ function DragDropImageUploader() {
             method: 'POST',
             body: formData,  // Use FormData instead of JSON.stringify
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            setShowLoader(false)
-            return response.json();
-        })
-        .then(responseData => {
-            // Handle the response from the server
-            console.log('Server response:', responseData);
-            setPrediction(responseData.Prediction);
-            setShowLoader(false)
-        })
-        .catch(error => {
-            console.error('Error during fetch operation:', error);
-            setShowLoader(false)
-        });
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+        
+                // If server response is 400, then alert file too big
+                if (response.status === 400) {
+                    alert("File too big");
+                    return;
+                }
+        
+                return response.json();
+            })
+            .then(responseData => {
+                // Handle the response from the server
+                console.log('Server response:', responseData);
+                setPrediction(responseData.Prediction);
+            })
+            .catch(error => {
+                console.error('Error during fetch operation:', error);
+            })
+            .finally(() => {
+                // Hide loader in any case (success or error)
+                setShowLoader(false);
+            });
     }
 
   // useEffect to listen for changes in predictState

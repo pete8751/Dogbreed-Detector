@@ -49,8 +49,8 @@ def analyze_image():
             return jsonify({'error': f'Unsupported image format: {form}'}), 400
         # print("8")
         # Check image dimensions
-        max_width = 1920  # Adjust the maximum width as needed
-        max_height = 1080  # Adjust the maximum height as needed
+        max_width = 4032  # Adjust the maximum width as needed
+        max_height = 3024  # Adjust the maximum height as needed
         if width > max_width or height > max_height:
             return jsonify({'error': f'Image dimensions exceed the allowed limits ({max_width}x{max_height})'}), 400
         
