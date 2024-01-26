@@ -26,6 +26,6 @@ Efficient image resizing and preprocessing were integrated into the data pipelin
 
 ## Web Application
 
-A user-friendly web application was developed to allow users to upload dog photos. The images are sent to the API, housing the Xception model, for real-time classification. The frontend is built with TypeScript and React.js, while the backend utilizes Python and Django.
+A user-friendly web application was developed to allow users to upload dog photos. The images are sent to the API, housing the Xception model, for real-time classification. The frontend is built with TypeScript and React.js, while the backend utilizes Python Flask and Docker.
 
 NOTE: Frontend currently under maintenance due to changes in hosting. I will fix this as soon as I can.
