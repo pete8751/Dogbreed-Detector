@@ -15,7 +15,6 @@ interface predictObject {
 
 function DragDropImageUploader() {
     const dragArea = document.querySelector(".drag-area");
-
     const [image, setImage] = useState<Image | null>(null);
     const [showLoader, setShowLoader] = React.useState(false)
     //Prediction is an array of objects, each object has a key and value, where key is the breed name and value is the probability there are 5 objects in the array
@@ -155,7 +154,7 @@ function DragDropImageUploader() {
         <div className = "card">
             <div className="nav"></div>
             <div className="top">
-                <p>Dog Breed Detector</p>
+                <p>Find out the breed of your Dog!</p>
             </div>
             <div className="drag-area" onDragOver={onDragOver} onDragLeave={onDragLeave} onDrop={onDrop}>
                 {image && ( 
@@ -189,25 +188,14 @@ function DragDropImageUploader() {
                 loading={showLoader}
                 disabled={showLoader}
             />
-            <div className="predict-container">
+            {prediction.length > 0 && (<div className="predict-container">
                 <div className="prediction">
-                    {prediction.length > 0 &&
-                    (<p>
+                    <p>
                         This is a {prediction[0].breed}
-                    </p>)}
-                </div>
-                {prediction.length > 0 &&
-                (<Dropdown items={prediction}></Dropdown>)}
-                {/* <div className="breakdown">
-                {prediction.length > 0 &&
-                    prediction.map((item) => (
-                    <p key={item.breed}>
-                        This is {Math.round(item.probability * 100)}% a {item.breed}
                     </p>
-                    ))}
-                </div> */}
-            </div>
-            <div className="footer"></div>
+                </div>
+                <Dropdown items={prediction}></Dropdown>
+            </div>)}
         </div>
     )
 }
