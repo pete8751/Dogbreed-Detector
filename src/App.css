@@ -343,7 +343,7 @@ fa-chevron-right{
   height: fit-content;
   max-width: max(50vw, 550px);
   margin: auto;
-  padding-top: 20px;
+  padding-top: 40px;
   padding-bottom: 40px;
 }
 
@@ -401,12 +401,14 @@ fa-chevron-right{
   align-items: center;
   height: 100%;
   padding-bottom: 30px;
+  padding-top: 30px;
   width: min(75%, 1000px);
   margin: auto;
 }
 
 .pdfobj{
   width: 100%;
+  min-height: 800px;
   height: 100%;
 }
 
@@ -436,7 +438,8 @@ fa-chevron-right{
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
+  margin-top: 20px;
+  margin-bottom: 40px;
 }
 .container{
   padding-top: 30px;
@@ -527,7 +530,7 @@ fa-chevron-right{
   height: 40px;
   width: 40px;
   background-color: rgba(255, 255, 255, 0.2);
-  margin: 0 10px 10px 0;
+  /* margin: 0 10px 10px 0; */
   text-align: center;
   line-height: 40px;
   border-radius: 50%;
@@ -544,13 +547,11 @@ fa-chevron-right{
 @media(max-width: 767px){
   .footer-col {
       width: 50%;
-      margin-bottom: 30px;
   }
 }
 
 @media(max-width: 574px){
   .footer-col {
       width: 100%;
-      margin-bottom: 30px;
   }
 }
