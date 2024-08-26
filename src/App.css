@@ -492,8 +492,16 @@ fa-chevron-right{
   transition-duration:.5s;
   transition-property:transform, box-shadow;
   transform:none;
+  cursor: pointer
 }
 .selector-item_radio:checked + .selector-item_label{
+  background-color:var(--blue);
+  color:var(--white);
+  box-shadow:0 0 4px rgba(0,0,0,.5),0 2px 4px rgba(0,0,0,.5);
+  transform:translateY(-2px);
+}
+/* I want the unchecked item to have a hover effect. */
+.selector-item_radio:not(:checked) + .selector-item_label:hover{
   background-color:var(--blue);
   color:var(--white);
   box-shadow:0 0 4px rgba(0,0,0,.5),0 2px 4px rgba(0,0,0,.5);
